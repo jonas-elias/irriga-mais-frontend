@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card class="custom-card">
+    <ion-card-header>
+      <ion-card-title class="custom-title">{{ fazenda[0]['nome'] }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p class="custom-description">Latitude: {{ fazenda[0]['localizacao_latitude'] }}</p>
+      <p class="custom-description">Longitude: {{ fazenda[0]['localizacao_longitude'] }}</p>
+    </ion-card-content>
+    <ion-card-content>
+      <ion-button class="custom-button" color="danger" (click)="voltar()">Sair</ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

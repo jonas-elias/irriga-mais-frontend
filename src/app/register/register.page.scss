@@ -1,0 +1,22 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+}
+
+.name-app {
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ion-card {
+    width: 80%;
+    max-width: 400px;
+}
+
+ion-button {
+    margin-top: 20px;
+}

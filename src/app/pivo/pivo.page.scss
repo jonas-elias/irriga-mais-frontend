@@ -1,0 +1,17 @@
+.custom-card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 1rem;
+}
+
+.custom-button {
+    background-color: #e53e3e;
+    float: right;
+    border-radius: 8px;
+    margin: 8px;
+}
+
+#open-modal-pivo {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}

@@ -1,0 +1,94 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Evento
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-card class="custom-card" *ngFor="let evento of eventos">
+    <ion-card-header>
+      <ion-card-title class="custom-title">{{ evento['pivo_nome'] }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p class="custom-description">Duração: {{ evento['duracao'] }}</p>
+    </ion-card-content>
+    <ion-card-content>
+      <p class="custom-description">Data início: {{ evento['data_hora_inicio'] }}</p>
+    </ion-card-content>
+    <ion-card-content>
+      <p class="custom-description">Status: {{ evento['status'] }}</p>
+    </ion-card-content>
+
+    <ion-card-content class="ion-justify-content-end">
+      <ion-button class="custom-button" color="primary" (click)="setOpen(true, evento['id'])">Opções</ion-button>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="eventos[0] == null" class="custom-card">
+    <ion-card-header>
+      <ion-card-title class="custom-title">Nenhum evento encontrado</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-action-sheet [isOpen]="isActionSheetOpen" header="Opções" [buttons]="actionSheetButtons"
+    (didDismiss)="setAction($event)"></ion-action-sheet>
+
+  <ion-fab id="open-modal-evento" (click)="getModal()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-modal>
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()">Cancelar</ion-button>
+          </ion-buttons>
+          <ion-title>Criar novo evento</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="confirmEvento()" [strong]="true">Salvar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+
+        <ion-list>
+          <ion-item>
+            <ion-select label="Pivô" label-placement="floating" [(ngModel)]="pivo">
+              <ion-select-option value="{{pivo['id']}}" *ngFor="let pivo of pivos">{{ pivo['nome']
+                }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-select label="Duração aproximada" label-placement="floating" [(ngModel)]="duracao">
+              <ion-select-option value="10">10</ion-select-option>
+              <ion-select-option value="20">20</ion-select-option>
+              <ion-select-option value="30">30</ion-select-option>
+              <ion-select-option value="40">40</ion-select-option>
+              <ion-select-option value="50">50</ion-select-option>
+              <ion-select-option value="60">60</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-select label="Ligar pivô (minutos)" label-placement="floating" [(ngModel)]="data_inicial">
+              <ion-select-option value="agora">Agora</ion-select-option>
+              <ion-select-option value="10">10</ion-select-option>
+              <ion-select-option value="20">20</ion-select-option>
+              <ion-select-option value="30">30</ion-select-option>
+              <ion-select-option value="40">40</ion-select-option>
+              <ion-select-option value="50">50</ion-select-option>
+              <ion-select-option value="60">60</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+
+      </ion-content>
+
+    </ng-template>
+  </ion-modal>
+</ion-content>

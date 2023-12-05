@@ -1,0 +1,73 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Pivôs</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card class="custom-card" *ngFor="let pivo of pivos">
+    <ion-card-header>
+      <ion-card-title class="custom-title">{{pivo['nome']}}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p class="custom-description">Descrição: {{pivo['descricao']}}</p>
+      <p class="custom-description">Tipo: {{pivo['tipo']}}</p>
+    </ion-card-content>
+
+    <ion-card-content>
+      <ion-button class="custom-button" color="danger" id="present-alert" (click)="setOpen(true, pivo['id'])">Inativar pivô</ion-button>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="pivos[0] == null" class="custom-card">
+    <ion-card-header>
+      <ion-card-title class="custom-title">Nenhum pivô encontrado</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-action-sheet [isOpen]="isActionSheetOpen" header="Tem certeza?" [buttons]="actionSheetButtons"
+    (didDismiss)="setAction($event)"></ion-action-sheet>
+
+  <ion-fab id="open-modal-pivo">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-modal trigger="open-modal-pivo">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()">Cancelar</ion-button>
+          </ion-buttons>
+          <ion-title>Criar pivô</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="confirm()" [strong]="true">Salvar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+
+        <ion-item class="relative">
+          <ion-label position="floating" class="text-gray-500 label-custom">Nome</ion-label>
+          <ion-input class="input-custom" [(ngModel)]="nome"></ion-input>
+        </ion-item>
+
+        <ion-item class=" relative">
+          <ion-label position="floating" class="text-gray-500 label-custom">Descrição</ion-label>
+          <ion-input class="input-custom" [(ngModel)]="descricao"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-select label="Tipo de pivô" label-placement="floating" [(ngModel)]="tipo">
+            <ion-select-option value="central">Central</ion-select-option>
+            <ion-select-option value="lateral">Lateral</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+      </ion-content>
+
+    </ng-template>
+  </ion-modal>
+</ion-content>
