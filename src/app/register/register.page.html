@@ -1,0 +1,38 @@
+<ion-header [translucent]="true">
+  <!-- <ion-toolbar>
+    <ion-title>register</ion-title>
+  </ion-toolbar> -->
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="name-app">
+    <h1>Irriga mais</h1>
+  </div>
+  <div class="login-container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title class="ion-text-center">Registro</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">E-mail</ion-label>
+          <ion-input type="text" [(ngModel)]="email"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Nome</ion-label>
+          <ion-input type="text" [(ngModel)]="username"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Senha</ion-label>
+          <ion-input type="password" [(ngModel)]="password"></ion-input>
+        </ion-item>
+
+        <ion-button expand="full" color="primary" (click)="register()">Registrar-se</ion-button>
+        <a href="/login" style="font-size: 16px;">Voltar</a>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

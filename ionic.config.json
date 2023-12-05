@@ -1,0 +1,7 @@
+{
+  "name": "send-signal-raspberry",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
