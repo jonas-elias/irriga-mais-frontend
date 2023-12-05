@@ -86,7 +86,7 @@ export class PivoPage implements OnInit {
   async getPivos() {
     const options = {
       url: environment.urlPath + '/irrigacao/getAllPivos',
-      headers: { 'Content-Type': 'application/json', 'Accept': '*/*' },
+      headers: { 'Content-Type': 'application/json', 'Accept': '*/*', 'fazendaId': await this.getFazendaId() },
     };
 
     const response: HttpResponse = await CapacitorHttp.get(options);

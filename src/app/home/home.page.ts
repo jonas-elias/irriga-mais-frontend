@@ -4,6 +4,7 @@ import { OverlayEventDetail } from '@ionic/core/components';
 import { CapacitorHttp, HttpResponse } from '@capacitor/core';
 import { environment } from 'src/environments/environment';
 import { Share } from '@capacitor/share';
+import { Preferences } from '@capacitor/preferences';
 
 @Component({
   selector: 'app-home',
@@ -49,7 +50,7 @@ export class HomePage implements OnInit {
   private action: string = ''
   private evento_id: string = ''
 
-  constructor(private alertController: AlertController) {}
+  constructor(private alertController: AlertController) { }
 
   setOpen(isOpen: boolean, evento_id: any) {
     this.evento_id = evento_id
@@ -62,6 +63,7 @@ export class HomePage implements OnInit {
   }
 
   async setAction(event: any) {
+    this.isActionSheetOpen = false
     const action = event.detail['data']['action']
 
     if (action === 'share') {
@@ -71,8 +73,6 @@ export class HomePage implements OnInit {
       this.getPivos()
       this.getEventos()
     }
-
-    this.isActionSheetOpen = false
   }
 
   async shareEvento() {
@@ -85,16 +85,16 @@ export class HomePage implements OnInit {
 
     await Share.share({
       title: 'Compartilhar evento',
-      text: 
-      'Pivo: ' + evento['pivo_nome'] + '\n' +
-      'Data início: ' + evento['data_hora_inicio'] + '\n' +
-      'Duração: ' + evento['duracao'] + '\n' +
-      'Status: ' + evento['status'] + '\n',
+      text:
+        'Pivo: ' + evento['pivo_nome'] + '\n' +
+        'Data início: ' + evento['data_hora_inicio'] + '\n' +
+        'Duração: ' + evento['duracao'] + '\n' +
+        'Status: ' + evento['status'] + '\n',
       dialogTitle: 'Compartilhar evento',
     });
   }
 
-   deleteEvento() {
+  deleteEvento() {
     const options = {
       url: environment.urlPath + '/irrigacao/deleteEvento/' + this.evento_id + '/',
       headers: { 'Content-Type': 'application/json', 'Accept': '*/*' },
@@ -116,14 +116,15 @@ export class HomePage implements OnInit {
   async getPivos() {
     const options = {
       url: environment.urlPath + '/irrigacao/getAllPivos',
-      headers: { 'Content-Type': 'application/json', 'Accept': '*/*' },
+      headers: { 'Content-Type': 'application/json', 'Accept': '*/*', 'fazendaId': await this.getFazendaId() },
     };
 
     const response: HttpResponse = await CapacitorHttp.get(options);
 
     if (response.status === 200) {
       this.pivos = response.data['response']
-    } else {
+    } else if (response.status === 404) { }
+    else {
       alert('Ocorreu algum erro ao recuperar os pivos!')
     }
   }
@@ -147,14 +148,15 @@ export class HomePage implements OnInit {
   async getEventos() {
     const options = {
       url: environment.urlPath + '/irrigacao/getIrrigacaoEvento',
-      headers: { 'Content-Type': 'application/json', 'Accept': '*/*' },
+      headers: { 'Content-Type': 'application/json', 'Accept': '*/*', 'fazendaId': await this.getFazendaId() },
     };
 
     const response: HttpResponse = await CapacitorHttp.get(options);
 
     if (response.status === 200) {
       this.eventos = response.data['response']
-    } else {
+    } else if (response.status === 404) { }
+    else {
       alert('Ocorreu algum erro ao recuperar os eventos!')
     }
   }
@@ -163,7 +165,10 @@ export class HomePage implements OnInit {
     const options = {
       url: environment.urlPath + '/irrigacao/createEvento',
       headers: { 'Content-Type': 'application/json', 'Accept': '*/*' },
-      params: { 'pivo_id': this.pivo, 'duracao': this.duracao, 'data_inicial': this.data_inicial }
+      params: {
+        'pivo_id': this.pivo, 'duracao': this.duracao,
+        'data_inicial': this.data_inicial, 'fazenda_id': await this.getFazendaId()
+      }
     };
 
     const response: HttpResponse = await CapacitorHttp.post(options);
@@ -176,5 +181,10 @@ export class HomePage implements OnInit {
     } else {
       alert('Ocorreu algum erro ao inserir o evento!')
     }
+  }
+
+  async getFazendaId() {
+    const { value } = await Preferences.get({ key: 'identification' })
+    return value as string
   }
 }
