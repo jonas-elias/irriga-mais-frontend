@@ -1,8 +1,8 @@
-# Irriga mais - Frontend
+# 🚀 Irriga mais - Frontend 
 
 Este é o repositório do frontend para o projeto de controle de um sistema de irrigação. O frontend foi desenvolvido utilizando o framework Ionic, proporcionando uma experiência de usuário intuitiva e responsiva. Este aplicativo se conecta ao servidor backend para gerenciar e controlar o sistema de irrigação.
 
-## Pré-requisitos
+## Pré-requisitos 📋
 
 Antes de começar, certifique-se de ter as seguintes ferramentas instaladas em seu ambiente de desenvolvimento:
 
@@ -12,7 +12,7 @@ Antes de começar, certifique-se de ter as seguintes ferramentas instaladas em s
   npm install -g @ionic/cli
   ```
 
-## Instalação
+## Instalação 🛠️
 1. Clone o repo e entre na pasta:
 ```bash
 git clone https://github.com/seu-usuario/sistema-irrigacao-frontend.git && cd irriga-mais-frontend
@@ -28,5 +28,5 @@ npm install
 ionic cap run android --l --external
 ```
 
-## Contribuição
+## Contribuição 🤝
 Sinta-se à vontade para contribuir para este projeto. Se encontrar algum problema ou tiver sugestões de melhorias, abra uma issue ou envie um pull request.
